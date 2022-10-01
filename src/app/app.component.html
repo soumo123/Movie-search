@@ -1,0 +1,82 @@
+
+
+
+<div class="container">
+  <u><h1 class="text-center mt-3">Search Movies</h1></u>
+  <div class="row mt-5 p-5 bg-form"> 
+   <div class="form">
+     <div class="row"> 
+   <div class="col-sm-6">
+    <form class="example-form">
+      <input type="text" placeholder="Enter Your Movies"aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+      <ng-template [ngIf]="newRating" >
+        <div class="d-sm-flex justify-content-between input-result">
+          <div class="">
+            <h4 class="heads"> {{newMovie}}</h4>
+            <ngb-rating [(rate)]="newRating"  [readonly]="true"></ngb-rating>
+          </div>
+          <div class="categoryname">
+            {{newCategory}}
+          </div>            
+        </div>
+       
+        
+        
+       
+      </ng-template>
+      
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions  | async">
+        <div >
+          <li class="d-sm-flex justify-content-between">
+           <div class="heads"><h4>{{ option.title}}</h4>
+            <ngb-rating [(rate)]="option.rating"  [readonly]="true"></ngb-rating></div>
+            <div class="categoryname">
+            {{option.category}}</div>
+          </li>
+        
+         </div>
+      </mat-option>
+      
+    </mat-autocomplete>
+
+
+    </form>
+    </div>
+ 
+<div class="col-sm-3">
+  <div class="dropdown">
+    <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+     Rating
+    </a>
+  
+    <ul class="dropdown-menu starlist">
+      <li *ngFor="let option of ratings">
+        <input type = "checkbox" class="modify" (change)="selectfunction($event)" [value]="option">
+        <ngb-rating [rate]="option" class="star"  [readonly]="true"></ngb-rating>
+      </li>
+    </ul>
+
+ </div>
+ </div>
+ <div class="col-sm-3">
+  <mat-form-field appearance="fill" >
+    <mat-label class="bbbbbbbbbb">Category</mat-label>
+    <mat-select [formControl]="myControl"  multiple  >
+      <mat-select-trigger>
+        {{myControl.value?.[0] || ''}}
+        <span *ngIf="(myControl.value?.length || 0) > 1" class="example-additional-selection">
+          (+{{(myControl.value?.length || 0) - 1}} {{myControl.value?.length === 2 ? 'other' : 'others'}})
+        </span>
+      </mat-select-trigger>
+      <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div> 
+  </div>
+ </div>
+ </div>
+ 
+
+
+<router-outlet></router-outlet>
